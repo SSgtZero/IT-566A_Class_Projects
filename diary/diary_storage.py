@@ -16,7 +16,7 @@ def get_data_dir_path():
     """Return the path to the data directory, creating it if needed."""
     data_dir_path = os.path.join(os.getcwd(), DATA_DIR)
     if not os.path.exists(data_dir_path):
-        os.makeddirs(data_dir_path)
+        os.makedirs(data_dir_path)
     return data_dir_path
 
 
