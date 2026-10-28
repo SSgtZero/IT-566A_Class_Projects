@@ -20,7 +20,7 @@ def get_file_path(filename, extension):
 
 def save_json(expenses, file_path):
     """Convert the expense list to JSON and write it to file."""
-    json_string = json.dumps({'expenses': expenses})
+    json_string = json.dumps({'expenses': expenses}, indent=4)
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(json_string)
 
