@@ -90,6 +90,16 @@ class ExpenseMenu:
         print(f'{len(expenses)} expense(s) Total: ${total:.2f}')
 
 
+    def print_category_summary(self):
+        """Print the total amount spent in each category."""
+        totals = {}
+        for e in self.expenses:
+            category = e['category'].title()
+            totals[category] = totals.get(category, 0) + e['amount']
+        for category in sorted(totals):
+            print(f' {categoty: <15} ${totals[category]:>9.2f}')
+
+
     def save_file(self):
         """Save the expense list to a JSON file."""
         filename = input('Filename to save: ').strip()
