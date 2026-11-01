@@ -18,7 +18,8 @@ class ExpenseMenu:
         self._SAVE_FILE = '4'
         self._OPEN_FILE = '5'
         self._EXPORT_CSV = '6'
-        self._EXIT = '7'
+        self._SUMMARY = '7'
+        self._EXIT = '8'
 
 
     def display_menu(self):
@@ -30,7 +31,8 @@ class ExpenseMenu:
         print('4. Save to JSON file')
         print('5. Open JSON file')
         print('6. Export to CSV file')
-        print('7. Exit')
+        print('7. Category summary')
+        print('8. Exit')
 
 
     def start_application(self):
@@ -52,9 +54,12 @@ class ExpenseMenu:
                         self.open_file()
                     case self._EXPORT_CSV:
                         self.export_csv()
+                    case self._SUMMARY:
+                        self.print_category_summary()
                     case self._EXIT:
-                        return
-                    case _:
+                        answer = input('Save before exiting? (y/n): ')
+                        if answer.strip().lower() == 'y':
+                            return
                         print(f'WARNING: {choice} is an invalid choice!')
             except (OSError, Exception) as e:
                 print(f'Problem with file I/O: {e}')
