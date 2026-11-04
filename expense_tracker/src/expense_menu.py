@@ -19,7 +19,8 @@ class ExpenseMenu:
         self._OPEN_FILE = '5'
         self._EXPORT_CSV = '6'
         self._SUMMARY = '7'
-        self._EXIT = '8'
+        self._DELETE = '8'
+        self._EXIT = '9'
 
 
     def display_menu(self):
@@ -32,7 +33,8 @@ class ExpenseMenu:
         print('5. Open JSON file')
         print('6. Export to CSV file')
         print('7. Category summary')
-        print('8. Exit')
+        print('8. Delete expense')
+        print('9. Exit')
 
 
     def start_application(self):
@@ -56,6 +58,8 @@ class ExpenseMenu:
                         self.export_csv()
                     case self._SUMMARY:
                         self.print_category_summary()
+                    case self._DELETE:
+                         self.delete_expenses()
                     case self._EXIT:
                         answer = input('Save before exiting? (y/n): ')
                         if answer.strip().lower() == 'y':
@@ -103,6 +107,23 @@ class ExpenseMenu:
             totals[category] = totals.get(category, 0) + e['amount']
         for category in sorted(totals):
             print(f' {categoty: <15} ${totals[category]:>9.2f}')
+
+
+    def delete_expenses(self):
+        """Show numbered expenses and delete the one the user picks."""
+        self.expenses.sort(key=lambda e: e['date'])
+        for number, e in enumerate(self.expenses, start=1):
+            print(f"{number}. {e['date']} {e['category']} ${e['amount']:.2f}")
+        try:
+            number = int(input('Number to delete (Enter to cancel): '))
+        except ValueError:
+            number = 0
+        if 1 <= number <= len(self.expenses):
+            removed = self.expenses.pop(number - 1)
+            print(f"Deleted {removed['date']} {removed['category']}")
+        else:
+            print('Nothing deleted.')
+            
 
 
     def save_file(self):
