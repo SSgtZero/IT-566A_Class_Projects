@@ -113,7 +113,7 @@ class ExpenseMenu:
             print(f' {category: <15} ${totals[category]:>9.2f}')
 
 
-    def delete_expenses(self):
+    def delete_expense(self):
         """Show numbered expenses and delete the one the user picks."""
         self.expenses.sort(key=lambda e: e['date'])
         for number, e in enumerate(self.expenses, start=1):
