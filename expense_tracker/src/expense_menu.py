@@ -55,7 +55,7 @@ class ExpenseMenu:
                     case self._OPEN_FILE:
                         self.open_file()
                     case self._EXPORT_CSV:
-                        self.export_csv()
+                        self.export_csv(self.expenses)
                     case self._SUMMARY:
                         self.print_category_summary()
                     case self._DELETE:
@@ -85,8 +85,12 @@ class ExpenseMenu:
         start_date = self.prompt_for_date('Start date: ', required=False)
         end_date = self.prompt_for_date('End date: ', required=False)
         category = input('Category: ').strip()
-        self.print_expenses(
-            filter_expenses(self.expenses, start_date, end_date, category))
+        results = filter_expenses(self.expenses, start_date, end_date,
+                                  category)
+        self.print_expenses(results)
+        answer = input('Export these results to CSV? (y/n): ')
+        if answer.strip().lower() == 'y':
+            self.export_csv(results)
 
 
     def print_expenses(self, expenses):
@@ -106,7 +110,7 @@ class ExpenseMenu:
             category = e['category'].title()
             totals[category] = totals.get(category, 0) + e['amount']
         for category in sorted(totals):
-            print(f' {categoty: <15} ${totals[category]:>9.2f}')
+            print(f' {category: <15} ${totals[category]:>9.2f}')
 
 
     def delete_expenses(self):
@@ -142,11 +146,11 @@ class ExpenseMenu:
         print(f'Opened {file_path}')
 
 
-    def export_csv(self):
-        """Export the expense list to a CSV file."""
+    def export_csv(self, expenses):
+        """Export the expenses list to a CSV file."""
         filename = input('CSV filename: ').strip()
         file_path = expense_files.get_file_path(filename, '.csv')
-        expense_files.export_csv(self.expenses, file_path)
+        expense_files.export_csv(expenses, file_path)
         print(f'Exported to {file_path}')
 
 
