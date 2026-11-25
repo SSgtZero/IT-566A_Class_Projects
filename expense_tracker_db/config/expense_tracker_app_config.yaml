@@ -1,0 +1,27 @@
+meta:
+  version: v1
+  app_name: Expense Tracker
+  log_prefix: expense_tracker
+
+logging:
+  logs_dir: logs
+  log_filename: app.log
+  log_level: debug 
+  log_to_console: false 
+  log_to_file: true 
+
+files:
+  data_dir: data 
+
+database:
+  pool:
+    name: expense_tracker_pool
+    size: 5
+    reset_session: true
+    use_pure: true
+  connection:
+    config:
+      database: expense_tracker
+      user: expense_tracker_user
+      host: localhost
+      port: 3306
